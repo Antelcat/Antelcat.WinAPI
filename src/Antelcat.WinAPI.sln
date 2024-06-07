@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antelcat.WinAPI", "Antelcat.WinAPI\Antelcat.WinAPI.csproj", "{F8A9C41D-86CC-42A7-BBCF-27C8BDE33AB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antelcat.WinAPI.UnitTest", "Antelcat.WinAPI.UnitTest\Antelcat.WinAPI.UnitTest.csproj", "{088CAD2A-B3B0-4AA5-A242-AD4CEBF711AA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F8A9C41D-86CC-42A7-BBCF-27C8BDE33AB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8A9C41D-86CC-42A7-BBCF-27C8BDE33AB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8A9C41D-86CC-42A7-BBCF-27C8BDE33AB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8A9C41D-86CC-42A7-BBCF-27C8BDE33AB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{088CAD2A-B3B0-4AA5-A242-AD4CEBF711AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{088CAD2A-B3B0-4AA5-A242-AD4CEBF711AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{088CAD2A-B3B0-4AA5-A242-AD4CEBF711AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{088CAD2A-B3B0-4AA5-A242-AD4CEBF711AA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
