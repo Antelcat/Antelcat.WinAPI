@@ -7,14 +7,16 @@
         <Nullable>enable</Nullable>
         <AssemblyName>Antelcat.WinAPI</AssemblyName>
         <RootNamespace>Antelcat.WinAPI</RootNamespace>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Antelcat.AutoGen" Version="1.2.1" />
+        <PackageReference Include="Antelcat.AutoGen" Version="1.2.1"/>
+        <InternalsVisibleTo Include="Antelcat.WinAPI.UnitTest"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="SetupAPI\" />
+        <Folder Include="SetupAPI\"/>
     </ItemGroup>
 
 </Project>

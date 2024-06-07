@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace Antelcat.WinAPI.IOCTL.Structs;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct DRIVE_LAYOUT_INFORMATION_GPT : IDriveLayoutInformationGpt
+internal struct DRIVE_LAYOUT_INFORMATION_GPT : IDriveLayoutInformationGpt
 {
     public Guid diskId;
     public long startingUsableOffset;

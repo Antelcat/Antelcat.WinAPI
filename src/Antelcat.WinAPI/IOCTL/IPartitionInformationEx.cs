@@ -1,5 +1,8 @@
 namespace Antelcat.WinAPI.IOCTL;
 
+/// <summary>
+/// 包含标准 AT 样式的主启动记录 (MBR) 和可扩展固件接口 (EFI) 磁盘的分区信息
+/// </summary>
 public interface IPartitionInformationEx
 {
     /// <summary>
@@ -26,6 +29,10 @@ public interface IPartitionInformationEx
     /// 如果此成员为 <value>true</value>，则分区可重写。 此参数的值应设置为 <value>true</value>。
     /// </summary>
     bool                          RewritePartition     { get; }
+    
+    /// <summary>
+    /// 
+    /// </summary>
     bool                          IsServicePartition   { get; }
     
     /// <summary>

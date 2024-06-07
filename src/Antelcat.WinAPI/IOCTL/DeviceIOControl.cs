@@ -3,18 +3,25 @@ using System.ComponentModel;
 using System.IO;
 using System.Runtime.InteropServices;
 using Antelcat.WinAPI.IOCTL.Structs;
+using Antelcat.WinAPI.Native;
 
 // ReSharper disable InconsistentNaming
 
 namespace Antelcat.WinAPI.IOCTL;
 
+/// <summary>
+/// <see cref="Kernel32"/>
+/// </summary>
 public static class DeviceIOControl
 {
-    public static void Run()
-    {
-        var ex = GetDriveLayoutInformationEx(PhysicalDrivePrefix + "0");
-    }
 
+    /// <summary>
+    /// IOCTL_DISK_GET_DRIVE_LAYOUT_EX
+    /// </summary>
+    /// <param name="plFileName"></param>
+    /// <returns></returns>
+    /// <exception cref="Win32Exception"></exception>
+    /// <exception cref="UnauthorizedAccessException"></exception>
     public static IDriveLayoutInformationEx GetDriveLayoutInformationEx(string plFileName)
     {
         var hDevice = CreateFile(
@@ -66,7 +73,7 @@ public static class DeviceIOControl
     #region Defines
 
     // 磁盘设备路径
-    private const string PhysicalDrivePrefix = @"\\.\PhysicalDrive";
+    internal const string PhysicalDrivePrefix = @"\\.\PhysicalDrive";
 
     #endregion
 }

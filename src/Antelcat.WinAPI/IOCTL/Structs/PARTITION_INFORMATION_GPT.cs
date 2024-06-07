@@ -7,11 +7,11 @@ namespace Antelcat.WinAPI.IOCTL.Structs;
 
 [StructLayout(LayoutKind.Sequential)]
 [DebuggerDisplay("{PartitionTypeName}")]
-public struct PARTITION_INFORMATION_GPT : IPartitionInformationGpt
+internal struct PARTITION_INFORMATION_GPT : IPartitionInformationGpt
 {
     public Guid           partitionType;
     public Guid           partitionId;
-    public ulong           attributes;
+    public ulong          attributes;
     public UnmanagedArray name;
 
     public Guid  PartitionType => partitionType;

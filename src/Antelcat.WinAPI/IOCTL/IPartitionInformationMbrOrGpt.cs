@@ -1,5 +1,8 @@
 namespace Antelcat.WinAPI.IOCTL;
 
+/// <summary>
+/// Union
+/// </summary>
 public interface IPartitionInformationMbrOrGpt
 {
     /// <summary>

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Antelcat.WinAPI.IOCTL;
 
+/// <summary>
+/// 包含 GUID 分区表 (GPT) 分区信息
+/// </summary>
 public interface IPartitionInformationGpt
 {
     /// <summary>
@@ -22,6 +25,10 @@ public interface IPartitionInformationGpt
     /// 此成员可以是以下一个或多个值。
     /// </summary>
     ulong   Attributes    { get; }
+    
+    /// <summary>
+    /// 描述分区的宽字符字符串
+    /// </summary>
     string Name          { get; }
 
     /// <summary>
@@ -72,6 +79,9 @@ public interface IPartitionInformationGpt
         /// </summary>
         public static readonly Guid PARTITION_MSFT_RECOVERY_GUID = Guid.Parse("de94bba4-06d1-4d40-a16a-bfd50179d6ac");
 
+        /// <summary>
+        /// EFI 规范支持的 GUID 标识
+        /// </summary>
         public static readonly Dictionary<Guid, string> EFIDefinedGuids = new()
         {
             { PARTITION_BASIC_DATA_GUID, nameof(PARTITION_BASIC_DATA_GUID) },

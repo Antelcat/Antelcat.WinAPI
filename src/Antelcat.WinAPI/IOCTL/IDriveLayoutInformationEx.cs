@@ -1,5 +1,8 @@
 namespace Antelcat.WinAPI.IOCTL;
 
+/// <summary>
+/// 包含有关驱动器分区的扩展信息
+/// </summary>
 public interface IDriveLayoutInformationEx
 {
     /// <summary>

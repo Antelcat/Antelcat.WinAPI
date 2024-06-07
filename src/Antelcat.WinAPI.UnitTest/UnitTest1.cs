@@ -12,6 +12,6 @@ public class Tests
     [Test]
     public void Test1()
     {
-        DeviceIOControl.Run();
+        var information = DeviceIOControl.GetDriveLayoutInformationEx(DeviceIOControl.PhysicalDrivePrefix + "0");
     }
 }
