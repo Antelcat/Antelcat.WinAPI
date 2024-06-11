@@ -15,8 +15,4 @@
         <InternalsVisibleTo Include="Antelcat.WinAPI.UnitTest"/>
     </ItemGroup>
 
-    <ItemGroup>
-        <Folder Include="SetupAPI\"/>
-    </ItemGroup>
-
 </Project>

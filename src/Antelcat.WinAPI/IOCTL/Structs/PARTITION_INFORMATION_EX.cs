@@ -9,15 +9,17 @@ internal struct PARTITION_INFORMATION_EX : IPartitionInformationEx
     internal ulong                       startingOffset;
     internal ulong                       partitionLength;
     internal uint                        partitionNumber;
-    internal char                        rewritePartition;
-    internal char                        isServicePartition;
+    [MarshalAs(UnmanagedType.U1)]
+    internal bool                        rewritePartition;
+    [MarshalAs(UnmanagedType.U1)]
+    internal bool                        isServicePartition;
     internal PARTITION_INFORMATION_UNION partitionUnion;
 
     public PartitionStyle                PartitionStyle       => (PartitionStyle)partitionStyle;
     public ulong                         StartingOffset       => startingOffset;
     public ulong                         PartitionLength      => partitionLength;
     public uint                          PartitionNumber      => partitionNumber;
-    public bool                          RewritePartition     => rewritePartition is (char)1;
-    public bool                          IsServicePartition   => isServicePartition is (char)1;
+    public bool                          RewritePartition     => rewritePartition ;
+    public bool                          IsServicePartition   => isServicePartition;
     public IPartitionInformationMbrOrGpt PartitionInformation => partitionUnion;
 }

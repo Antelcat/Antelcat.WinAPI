@@ -14,6 +14,13 @@ namespace Antelcat.WinAPI.IOCTL;
 /// </summary>
 public static class DeviceIOControl
 {
+    /// <summary>
+    /// IOCTL_DISK_GET_DRIVE_LAYOUT_EX
+    /// </summary>
+    /// <param name="diskNumber">number of Physical drive</param>
+    /// <returns></returns>
+    public static IDriveLayoutInformationEx GetDriveLayoutInformationEx(int diskNumber) =>
+        GetDriveLayoutInformationEx(PhysicalDrivePrefix + diskNumber);
 
     /// <summary>
     /// IOCTL_DISK_GET_DRIVE_LAYOUT_EX
@@ -43,7 +50,7 @@ public static class DeviceIOControl
             var driveLayoutBuffer = Marshal.AllocHGlobal(driveLayoutSize);
             var success = DeviceIoControl(
                 hDevice,
-                IOCTL_DISK_GET_DRIVE_LAYOUT_EX,
+                Constant.IOCTL_DISK_GET_DRIVE_LAYOUT_EX,
                 IntPtr.Zero,
                 0,
                 driveLayoutBuffer,

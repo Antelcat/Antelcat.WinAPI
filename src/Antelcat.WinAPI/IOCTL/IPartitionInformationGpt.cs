@@ -11,7 +11,7 @@ public interface IPartitionInformationGpt
     /// <summary>
     /// 标识分区类型的 GUID
     /// EFI 规范支持的每个分区类型都由其自己的 GUID 标识，该 GUID 由分区的开发人员发布。
-    /// <see cref="IPartitionInformationGpt.Constant"/>
+    /// <see cref="PartitionTypes"/>
     /// </summary>
     Guid   PartitionType { get; }
     
@@ -34,7 +34,7 @@ public interface IPartitionInformationGpt
     /// <summary>
     /// EFI常量
     /// </summary>
-    public static class Constant
+    public static class PartitionTypes
     {
         /// <summary>
         /// 由 Windows 创建和识别的数据分区类型。

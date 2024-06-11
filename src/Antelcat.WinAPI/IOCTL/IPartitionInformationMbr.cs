@@ -1,5 +1,4 @@
 using System;
-using Antelcat.WinAPI.Native;
 
 namespace Antelcat.WinAPI.IOCTL;
 
@@ -11,7 +10,7 @@ public interface IPartitionInformationMbr
     /// <summary>
     /// 分区的类型。 有关值的列表，请参阅 磁盘分区类型
     /// </summary>
-    byte  PartitionType       { get; }
+    PartitionTypes  PartitionType       { get; }
     
     /// <summary>
     /// 如果该成员为 <value>true</value>，则分区为启动分区。 当此结构与 IOCTL_DISK_SET_PARTITION_INFO_EX 控件代码一起使用时，将忽略此参数的值
@@ -32,4 +31,58 @@ public interface IPartitionInformationMbr
     /// 
     /// </summary>
     Guid  PartitionId         { get; }
+
+
+    /// <summary>
+    /// 标识了磁盘驱动程序使用的有效分区类型
+    /// </summary>
+    [Flags]
+    public enum PartitionTypes
+    {
+        /// <summary>
+        /// 未使用的条目分区
+        /// </summary>
+        PARTITION_ENTRY_UNUSED = 0x00,
+
+        /// <summary>
+        /// 扩展分区。
+        /// </summary>
+        PARTITION_EXTENDED = 0x05,
+
+        /// <summary>
+        /// FAT12 文件系统分区
+        /// </summary>
+        PARTITION_FAT_12 = 0x01,
+
+        /// <summary>
+        /// FAT16 文件系统分区
+        /// </summary>
+        PARTITION_FAT_16 = 0x04,
+
+        /// <summary>
+        /// FAT32 文件系统分区
+        /// </summary>
+        PARTITION_FAT32 = 0x0B,
+
+        /// <summary>
+        /// IFS 分区
+        /// </summary>
+        PARTITION_IFS = 0x07,
+
+        /// <summary>
+        /// (LDM) 分区的逻辑磁盘管理器
+        /// </summary>
+        PARTITION_LDM = 0x42,
+
+        /// <summary>
+        /// NTFT 分区
+        /// </summary>
+        PARTITION_NTFT = 0x80,
+
+        /// <summary>
+        /// 有效的 NTFT 分区
+        /// 分区类型代码的高位表示分区是 NTFT 镜像或条带数组的一部分
+        /// </summary>
+        VALID_NTFT = 0xC0,
+    }
 }
