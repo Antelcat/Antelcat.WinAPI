@@ -1,10 +1,12 @@
-using System.Diagnostics;
+using System.Management;
+using System.Runtime.Versioning;
 using Antelcat.WinAPI.Extensions;
 using Antelcat.WinAPI.IOCTL;
 using Antelcat.WinAPI.SetupAPI;
 
 namespace Antelcat.WinAPI.UnitTest;
 
+[SupportedOSPlatform("windows")]
 public class Tests
 {
     [SetUp]
@@ -16,7 +18,7 @@ public class Tests
     public void TestDataPartition()
     {
         var info = DeviceIOControl.GetDriveLayoutInformationEx(0);
-        if(info.PartitionStyle is not PartitionStyle.PARTITION_STYLE_GPT) Assert.Fail();
+        if (info.PartitionStyle is not PartitionStyle.PARTITION_STYLE_GPT) Assert.Fail();
         var dataPartition = info.PartitionEntry
             .Where(static x => x.PartitionStyle == PartitionStyle.PARTITION_STYLE_GPT
                                && x.PartitionInformation.Gpt.Is(PartitionTypes.PARTITION_BASIC_DATA_GUID))
@@ -51,7 +53,23 @@ public class Tests
                     _                                  => Guid.Empty,
                 }))
             .ToArray();
-        Console.WriteLine(string.Join("\n" ,partitions.Select(x=>x.ToString())));
+        Console.WriteLine(string.Join("\n", partitions.Select(x => x.ToString())));
         Assert.That(partitions, Is.Not.Empty);
+    }
+
+    [Test]
+    public void TestBitLocker()
+    {
+        var path = new ManagementPath(@"\ROOT\CIMV2\Security\MicrosoftVolumeEncryption")
+        {
+            ClassName = "Win32_EncryptableVolume"
+        };
+        var scope = new ManagementScope(path);
+        path.Server = Environment.MachineName;
+        var objectSearcher = new ManagementClass(scope, path, new ObjectGetOptions());
+        foreach (var item in objectSearcher.GetInstances())
+        {
+            Console.WriteLine(item["DeviceID"] + " " + item["ProtectionStatus"] + " " + item["ConversionStatus"]);
+        }
     }
 }
