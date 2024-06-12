@@ -14,9 +14,9 @@ internal struct PARTITION_INFORMATION_GPT : IPartitionInformationGpt
     public ulong          attributes;
     public UnmanagedArray name;
 
-    public Guid  PartitionType => partitionType;
-    public Guid  PartitionId   => partitionId;
-    public ulong Attributes    => attributes;
+    public Guid          PartitionType => partitionType;
+    public Guid          PartitionId   => partitionId;
+    public EFIAttributes Attributes    => (EFIAttributes)attributes;
 
     public string Name => name.String;
 

@@ -25,7 +25,7 @@ public interface IPartitionInformationMbr
     /// <summary>
     /// 创建分区表时要分配的隐藏扇区数
     /// </summary>
-    ulong HiddenSectors       { get; }
+    uint HiddenSectors       { get; }
     
     /// <summary>
     /// 

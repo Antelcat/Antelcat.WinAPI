@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Antelcat.WinAPI.IOCTL;
-using Antelcat.WinAPI.SetupAPI;
 
 namespace Antelcat.WinAPI.Extensions;
 
@@ -15,6 +14,6 @@ public static class IOCTLExtension
     /// </summary>
     /// <returns></returns>
     public static IEnumerable<IDriveLayoutInformationEx> EnumAllDriveLayoutInformationEx()
-        => Enumerable.Range(0, SetupDiGetClassDevs.SetupDiEnumDevicesInfo().ToArray().Length)
-            .Select(DeviceIOControl.GetDriveLayoutInformationEx);
+        => Enumerable.Range(0, SetupAPI.Interop.EnumDiskInfo().ToArray().Length)
+            .Select(Interop.GetDriveLayoutInformationEx);
 }

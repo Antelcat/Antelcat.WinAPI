@@ -24,7 +24,7 @@ public interface IPartitionInformationGpt
     /// 可扩展固件接口 (EFI) 分区的属性。
     /// 此成员可以是以下一个或多个值。
     /// </summary>
-    ulong   Attributes    { get; }
+    EFIAttributes   Attributes    { get; }
     
     /// <summary>
     /// 描述分区的宽字符字符串

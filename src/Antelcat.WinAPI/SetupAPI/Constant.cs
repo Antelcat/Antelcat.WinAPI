@@ -4,7 +4,7 @@ using System;
 
 namespace Antelcat.WinAPI.SetupAPI;
 
-internal static class Constant
+public static partial class Interop
 {
     public const int DIGCF_PRESENT         = 0x00000002;
     public const int DIGCF_DEVICEINTERFACE = 0x00000010;

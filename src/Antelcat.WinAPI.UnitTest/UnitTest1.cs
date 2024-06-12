@@ -2,7 +2,6 @@ using System.Management;
 using System.Runtime.Versioning;
 using Antelcat.WinAPI.Extensions;
 using Antelcat.WinAPI.IOCTL;
-using Antelcat.WinAPI.SetupAPI;
 
 namespace Antelcat.WinAPI.UnitTest;
 
@@ -17,7 +16,7 @@ public class Tests
     [Test]
     public void TestDataPartition()
     {
-        var info = DeviceIOControl.GetDriveLayoutInformationEx(0);
+        var info = IOCTL.Interop.GetDriveLayoutInformationEx(0);
         if (info.PartitionStyle is not PartitionStyle.PARTITION_STYLE_GPT) Assert.Fail();
         var dataPartition = info.PartitionEntry
             .Where(static x => x.PartitionStyle == PartitionStyle.PARTITION_STYLE_GPT
@@ -29,14 +28,12 @@ public class Tests
     [Test]
     public void TestDisk()
     {
-        var discs = SetupDiGetClassDevs.SetupDiEnumDevicesInfo().ToArray();
+        var discs = SetupAPI.Interop.EnumDiskInfo().ToArray();
     }
 
-    [Test]
-    public void TestAllDataPartitions()
-    {
-        var partitions = IOCTLExtension.EnumAllDriveLayoutInformationEx()
-            .SelectMany(static x => x.PartitionEntry
+    private IEnumerable<(int,Guid[])> PartitionsWithIndex() =>
+        IOCTLExtension.EnumAllDriveLayoutInformationEx()
+            .Select(static (x, s) => (s, x.PartitionEntry
                 .Where(static x => x.PartitionStyle switch
                 {
                     PartitionStyle.PARTITION_STYLE_GPT =>
@@ -51,9 +48,13 @@ public class Tests
                     PartitionStyle.PARTITION_STYLE_GPT => x.PartitionInformation.Gpt.PartitionId,
                     PartitionStyle.PARTITION_STYLE_MBR => x.PartitionInformation.Mbr.PartitionId,
                     _                                  => Guid.Empty,
-                }))
-            .ToArray();
-        Console.WriteLine(string.Join("\n", partitions.Select(x => x.ToString())));
+                }).ToArray()));
+
+    [Test]
+    public void TestAllDataPartitions()
+    {
+        var partitions = PartitionsWithIndex().ToArray();
+        Console.WriteLine(string.Join("\n", partitions.Select(x => x.Item2.ToString())));
         Assert.That(partitions, Is.Not.Empty);
     }
 
@@ -69,7 +70,48 @@ public class Tests
         var objectSearcher = new ManagementClass(scope, path, new ObjectGetOptions());
         foreach (var item in objectSearcher.GetInstances())
         {
-            Console.WriteLine(item["DeviceID"] + " " + item["ProtectionStatus"] + " " + item["ConversionStatus"]);
-        }
+            Console.WriteLine($"{item["DriveLetter"]} {item["DeviceID"]} {item["ProtectionStatus"]} {item["ConversionStatus"]}");
+        } 
+    }
+
+    [Test]
+    public void TestDevice()
+    {
+        var discs = new ManagementObjectSearcher("SELECT * FROM Win32_DiskPartition")
+            .Get()
+            .Cast<ManagementObject>()
+            .ToArray();
+        var logics = new ManagementObjectSearcher("SELECT * FROM Win32_LogicalDisk")
+            .Get()
+            .Cast<ManagementObject>()
+            .ToArray();
+        var arr = new ManagementObjectSearcher("SELECT * FROM Win32_PhysicalMedia")
+            .Get()
+            .Cast<ManagementObject>()
+            .ToArray();
+        var ids = discs.Select(x => x["PartitionID"]).ToArray();
+        var parts = arr.Select(x => x["SerialNumber"]).ToArray();
+        var log   = logics.Select(x => x["VolumeSerialNumber"]).ToArray();
+    }
+
+    [Test]
+    public void TestCurrentDisk()
+    {
+        var root = Path.GetPathRoot(AppContext.BaseDirectory);
+        Assert.That(root, Is.Not.Null);
+        var disk = FileAPI.Interop.GetVolumeName(root);
+        Assert.That(disk, Is.Not.Null);
+        var number = Interop.GetDeviceNumber($@"\\.\{root[..^1]}");
+        var guid   = Guid.Parse(disk.AsSpan(@"\\?\Volume{".Length, 36));
+        var arr = new ManagementObjectSearcher("SELECT * FROM Win32_PhysicalMedia")
+            .Get()
+            .Cast<ManagementObject>();
+        var index = PartitionsWithIndex().FirstOrDefault(x => x.Item2.Contains(guid)).Item1;
+    }
+
+    [Test]
+    public void TestGetDeviceNumber()
+    {
+        var number = Interop.GetDeviceNumber(@"\\.\H:");
     }
 }
